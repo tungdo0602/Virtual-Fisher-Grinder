@@ -25,6 +25,24 @@ function format(...code){
         return `[${formatList}m`
     }
 }
+const showNotification = (t,b,i='',onclick=function(){}) => {
+    // create a new notification
+    const notification = new Notification(t, {
+        body: b,
+        icon: i,
+        vibrate: true
+    });
+
+    // close the notification after 10 seconds
+    setTimeout(() => {
+        notification.close();
+    }, 10 * 1000);
+
+    // navigate to a URL
+    notification.addEventListener('click', () => {
+        (onclick)()
+    });
+}
 class Logger {
     static author = `[AutoFish]`;
     static log(notes) {
@@ -56,6 +74,7 @@ while (true) {
         await new Promise(r => setTimeout(r, time));
         if(document.querySelectorAll(".embedTitle-2n1pEb.embedMargin-2PsaQ4")[document.querySelectorAll(".embedTitle-2n1pEb.embedMargin-2PsaQ4").length-1].innerText.includes("Anti-bot")){
             Logger.log("Please verify to continues")
+            showNotification("Auto Fish","Please verify to continues!")
             break
         }
         fish()
